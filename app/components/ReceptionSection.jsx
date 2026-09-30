@@ -39,9 +39,9 @@ export default function ReceptionSection({ onScrollTop }) {
                   <i className="fa-solid fa-location-dot"></i>
                 </div>
                 <div className="sec4-text-val sec4-venue-lines">
-                  <span>SRI MAHAL THIRUMANA MANDAPAM,</span>
-                  <span>TRICHY ROAD FLYOVER,</span>
-                  <span>NAMAKKAL</span>
+                  <span>Sri mahal thirumana mandapam,</span>
+                  <span>Trichy road flyover,</span>
+                  <span>Namakkal</span>
                 </div>
               </div>
 

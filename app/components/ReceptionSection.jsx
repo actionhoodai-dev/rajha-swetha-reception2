@@ -27,7 +27,7 @@ export default function ReceptionSection({ onScrollTop }) {
                 <div className="sec4-icon-glyph">
                   <i className="fa-regular fa-calendar"></i>
                 </div>
-                <div className="sec4-text-val sec4-date-single">12 NOV 2026</div>
+                <div className="sec4-text-val sec4-date-single">13 NOV 2026</div>
               </div>
 
               {/* Vertical Divider */}
@@ -39,9 +39,9 @@ export default function ReceptionSection({ onScrollTop }) {
                   <i className="fa-solid fa-location-dot"></i>
                 </div>
                 <div className="sec4-text-val sec4-venue-lines">
-                  <span>BHARATHI MAHAL,</span>
-                  <span>KAMARAJ NAGAR,</span>
-                  <span>GOBICHETTIPALAYAM</span>
+                  <span>SRI MAHAL THIRUMANA MANDAPAM,</span>
+                  <span>TRICHY ROAD FLYOVER,</span>
+                  <span>NAMAKKAL</span>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@ export default function ReceptionSection({ onScrollTop }) {
                 </div>
                 <div className="sec4-text-val sec4-time-lines">
                   <span>6:00 PM –</span>
-                  <span>10:00 PM</span>
+                  <span>09:00 PM</span>
                 </div>
               </div>
             </div>

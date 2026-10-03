@@ -1,47 +1,56 @@
 import './globals.css';
+import { receptionData } from '../config/reception';
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: false,
+  maximumScale: 5.0,
+  themeColor: '#080709',
 };
 
-// Automatically detect Vercel production domain, deployment URL, or custom domain
 const getSiteUrl = () => {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return 'https://rajha-swetha-reception1.vercel.app';
+  return 'https://rajha-swetha-reception.vercel.app';
 };
 
 const siteUrl = getSiteUrl();
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Rajha Mukilan & Swetha | Wedding & Reception Invitation',
-  description: 'Two beautiful souls, one incredible journey. You are cordially invited to celebrate the wedding reception of Rajha Mukilan and Swetha on 12 November 2026 at Bharathi Mahal, Gobichettipalayam.',
+  title: `${receptionData.couple.groom} & ${receptionData.couple.bride} — The Wedding Reception`,
+  description: `You are cordially invited to celebrate the luxury evening reception of ${receptionData.couple.groom} and ${receptionData.couple.bride} on Friday, ${receptionData.event.date}, ${receptionData.event.time} at ${receptionData.event.venue}, ${receptionData.event.subVenue}, ${receptionData.event.city}.`,
+  keywords: [
+    'Rajha Mukilan',
+    'Swetha',
+    'Wedding Reception',
+    'Sri Mahal Namakkal',
+    'Luxury Wedding Reception',
+    '13 November 2026',
+    'Digital Wedding Invitation',
+  ],
   openGraph: {
-    title: 'Rajha Mukilan & Swetha | Wedding & Reception',
-    description: 'Two beautiful souls, one incredible journey. Save the date: 12 November 2026 at Bharathi Mahal, Gobichettipalayam.',
+    title: `${receptionData.couple.groom} & ${receptionData.couple.bride} | Wedding Reception`,
+    description: `An intimate luxury reception under the lights. ${receptionData.event.date}, ${receptionData.event.time} at ${receptionData.event.venue}, ${receptionData.event.city}.`,
     type: 'website',
     url: siteUrl,
-    siteName: 'Rajha & Swetha Wedding',
+    siteName: `${receptionData.couple.groom} & ${receptionData.couple.bride} Reception`,
     images: [
       {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 675,
+        url: '/images/reception/canopy-lights.jpg',
+        width: 1920,
+        height: 1080,
         type: 'image/jpeg',
-        alt: 'Rajha Mukilan & Swetha Wedding & Reception Invitation',
+        alt: `${receptionData.couple.groom} & ${receptionData.couple.bride} Reception Celebration`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rajha Mukilan & Swetha | Wedding & Reception',
-    description: 'Two beautiful souls, one incredible journey. Save the date: 12 November 2026.',
-    images: ['/og-image.jpg'],
+    title: `${receptionData.couple.groom} & ${receptionData.couple.bride} | Wedding Reception`,
+    description: `An intimate luxury reception under the lights. ${receptionData.event.date} at ${receptionData.event.venue}, ${receptionData.event.city}.`,
+    images: ['/images/reception/canopy-lights.jpg'],
   },
 };
 
@@ -49,26 +58,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* High-Priority Preloads for Instant First Paint */}
-        <link
-          rel="preload"
-          as="image"
-          href="/final-page1.png"
-          type="image/png"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/final-page3.png"
-          type="image/png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/template_reception_blank.webp"
-          type="image/webp"
-        />
+        {/* Strategic media preloads */}
         <link
           rel="preload"
           as="video"
@@ -77,17 +67,20 @@ export default function RootLayout({ children }) {
         />
         <link
           rel="preload"
-          as="video"
-          href="/3rd-page-video.mp4"
-          type="video/mp4"
+          as="image"
+          href="/images/reception/canopy-lights.jpg"
+          type="image/jpeg"
+          fetchPriority="high"
         />
 
+        {/* High-End Typography */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Satisfy&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Italiana&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Great+Vibes&display=swap"
           rel="stylesheet"
         />
+        {/* Font Awesome 6 for minimal icons */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"

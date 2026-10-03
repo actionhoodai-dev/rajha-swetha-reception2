@@ -1,125 +1,88 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import HeroSection from './components/HeroSection';
-import VideoSection from './components/VideoSection';
-import StorySection from './components/StorySection';
-import ReceptionSection from './components/ReceptionSection';
-import AmbientBackdrop from './components/AmbientBackdrop';
-import PetalsCanvas from './components/PetalsCanvas';
-import SideNav from './components/SideNav';
-import FloatingHeader from './components/FloatingHeader';
-import BottomAudioPlayer from './components/BottomAudioPlayer';
+import { useState, useCallback } from 'react';
+import SmoothScroll from './components/SmoothScroll';
 import IntroOverlay from './components/IntroOverlay';
+import AmbientLightingCanvas from './components/AmbientLightingCanvas';
+import Navigation from './components/Navigation';
+import CinematicExperience from './components/CinematicExperience';
+import AudioPlayer from './components/AudioPlayer';
 
-export default function WeddingPage() {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function ReceptionPage() {
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
 
-  const viewportRef = useRef(null);
-  const toastTimeoutRef = useRef(null);
-
-  // Trigger toast notification
   const triggerToast = useCallback((msg) => {
     setToastMessage(msg);
     setShowToast(true);
-    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
-    toastTimeoutRef.current = setTimeout(() => {
+    setTimeout(() => {
       setShowToast(false);
-    }, 2400);
+    }, 2800);
   }, []);
 
-  // Smooth scroll to section index
-  const scrollToSection = useCallback((index) => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
-    const sections = viewport.querySelectorAll('.story-page');
-    if (sections[index]) {
-      sections[index].scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
-
-  // IntersectionObserver to sync active section on scroll
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
-
-    const sections = viewport.querySelectorAll('.story-page');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-            setActiveIndex(index);
-          }
-        });
-      },
-      {
-        root: viewport,
-        threshold: 0.5,
+  const handleNavigate = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      if (window.lenis) {
+        window.lenis.scrollTo(el, { offset: 0, duration: 1.4 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
       }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+    }
+  };
 
   return (
-    <div className="wedding-app-root">
-      {/* Intro Video Overlay with Skip Button at Left Bottom */}
-      <IntroOverlay />
+    <SmoothScroll>
+      <div className="reception-experience-app" style={{ position: 'relative', minHeight: '100vh', backgroundColor: '#070608' }}>
+        {/* Full-screen Opening Intro Video */}
+        <IntroOverlay />
 
-      {/* Ambient Blurred Background matching active section */}
-      <AmbientBackdrop activeIndex={activeIndex} />
+        {/* Cinematic Film Texture & Vignette */}
+        <div className="cinematic-film-grain" />
+        <div className="cinematic-vignette" />
 
-      {/* Mandatory Heart-Shaped Petals (Hidden on Section 2 Video, active on 1, 3, 4) */}
-      <PetalsCanvas isVisible={activeIndex !== 1} />
+        {/* Ambient Evening Candle & Filament Bokeh Simulation */}
+        <AmbientLightingCanvas />
 
-      {/* Top Reading Progress Bar */}
-      <div className="top-progress-container">
-        <div 
-          className="top-progress-bar" 
-          style={{ width: `${((activeIndex + 1) / 4) * 100}%` }}
-        />
-      </div>
+        {/* Minimal Floating Navigation Monogram & Drawer */}
+        <Navigation onNavigate={handleNavigate} />
 
-      {/* Floating Header (Couple badge on left) */}
-      <FloatingHeader />
+        {/* Main Continuous Cinematic Reception Story */}
+        <main>
+          <CinematicExperience onToast={triggerToast} />
+        </main>
 
-      {/* Side Navigation Indicator Dots */}
-      <SideNav 
-        activeIndex={activeIndex} 
-        onSelectSection={scrollToSection} 
-      />
+        {/* Ambient Soundtrack Controller */}
+        <AudioPlayer onToast={triggerToast} />
 
-      {/* Main Snap-Scroll Story Viewport */}
-      <main className="story-wrapper">
-        <div className="story-viewport" ref={viewportRef}>
-          {/* Page 1: Hero / Welcome */}
-          <HeroSection onScrollNext={scrollToSection} />
-
-          {/* Page 2: Continuous Running AI Video */}
-          <VideoSection 
-            onScrollNext={scrollToSection}
-            showToast={triggerToast}
-          />
-
-          {/* Page 3: Our Story (5-6 words per line maximum, safe bounds) */}
-          <StorySection onScrollNext={scrollToSection} />
-
-          {/* Page 4: Reception Details (moved down, no star ending, date right 1cm) */}
-          <ReceptionSection onScrollTop={scrollToSection} />
+        {/* Minimal Luxury Toast */}
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '5.5rem',
+            right: '2rem',
+            zIndex: 90,
+            padding: '0.65rem 1.2rem',
+            backgroundColor: 'rgba(12, 10, 14, 0.92)',
+            border: '1px solid rgba(243, 199, 124, 0.4)',
+            borderRadius: '4px',
+            color: '#faf5ed',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '0.72rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            opacity: showToast ? 1 : 0,
+            transform: showToast ? 'translateY(0)' : 'translateY(8px)',
+            pointerEvents: 'none',
+            transition: 'all 0.35s ease',
+            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.8)',
+          }}
+        >
+          {toastMessage}
         </div>
-      </main>
-
-      {/* Floating Mute/Play Button at the Right Bottom of the Screen with reception_song.mp3 */}
-      <BottomAudioPlayer showToast={triggerToast} />
-
-      {/* Toast Notification */}
-      <div className={`toast-notification ${showToast ? 'show' : ''}`}>
-        {toastMessage}
       </div>
-    </div>
+    </SmoothScroll>
   );
 }

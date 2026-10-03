@@ -52,9 +52,6 @@ export default function ReceptionPage() {
           <CinematicExperience onToast={triggerToast} />
         </main>
 
-        {/* Ambient Soundtrack Controller */}
-        <AudioPlayer onToast={triggerToast} />
-
         {/* Minimal Luxury Toast */}
         <div
           style={{
